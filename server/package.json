@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "MERN Stack Expense App Tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmaabdo/mern-expense-app.git"
+  },
+  "author": "Ahmad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmaabdo/mern-expense-app/issues"
+  },
+  "homepage": "https://github.com/ahmaabdo/mern-expense-app#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
