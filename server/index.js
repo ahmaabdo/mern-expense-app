@@ -1,15 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const app = express();
+require('dotenv').config();
 
-app.use(router);
+const app = require('./src/app');
 
-router.get('/', (req, res) => {
-    res.send({
-        message: 'Hello World'
-    })
-})
+const PORT = process.env.PORT || 5000;
 
-app.listen(3000, () => {
-    console.log('Server is ready');
+app.listen(PORT, () => {
+    console.log('Server is ready on port ' + PORT);
 });
