@@ -4,12 +4,34 @@ const passport = require('passport');
 
 const userController = require('../controllers/users.controller');
 
-//auth and sign up
-
-router.post('/register', userController.register);
+// Auth and Sign Up
+router.post('/register', userController.regisetr);
 router.post('/auth', userController.login);
-router.get('/test', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    return res.send({ message: 'You are authenticated user' });
+
+// Customize and Protect the  routes
+router.all('*', (req, res, next) => {
+    passport.authenticate('jwt', { session: false }, (err, user) => {
+        if (err || !user) {
+            const error = new Error('You are not authorized to access this area');
+            error.status = 401;
+            throw error;
+        }
+
+        //
+        req.user = user;
+        return next();
+    })(req, res, next);
 });
+
+// -------------- Protected Routes -------------- //
+router.get(
+  '/expense',
+  (req, res, next) => {
+    return res.send({ 
+        message: 'hi, you are authenticated',
+        user: req.user
+     });
+  }
+);
 
 module.exports = router;

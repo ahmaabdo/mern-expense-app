@@ -1,52 +1,64 @@
 const jwt = require('jsonwebtoken');
-const user = require('../models/user.model');
+const User = require("../models/user.model");
+
 const userController = {};
 
-userController.register = async (req, res, next) => {
-    const { name, email, password, joind } = req.body;
-    const newUser = new user({
-        name, email, password, joind
-    });
-    try {
-        const user = await newUser.save();
-        return res.send({ user });
-    } catch (e) {
-        if (e.code === 11000 && e.name === 'MongoError') {
-            var error = new Error(`Email address ${newUser.email} is already taken`);
-            next(error);
-        } else {
-            next(e);
-        }
-    }
+userController.regisetr = async (req, res, next) => {
+  const { name, email, password, joined } = req.body;
+  const newUser = new User({
+    name,
+    email,
+    password,
+    joined
+  });
+
+  try {
+      const user = await newUser.save();
+      return res.send({ user });
+  }catch(e) {
+      if (e.code === 11000 && e.name === 'MongoError') {
+          const error = new Error(`Email address ${newUser.email} is already taken`);
+          error.status = 400
+          next(error);
+      }else {
+          next(e);
+      }
+      
+  }
+
 };
 
 userController.login = async (req, res, next) => {
     //Username, password in request
     const { email, password } = req.body;
     try {
-        //Check username and password are right, then create jwt and return it
-        const userAcc = await user.findOne({ email });
-        if (!userAcc) {
+        //Retrieve user information
+        const user = await User.findOne({ email });
+        if (!user) {
             const err = new Error(`The email ${email} was not found on our system`);
-            err.status = 404;
-            next(err);
+            err.status = 401;
+            return next(err);
         }
-        userAcc.isPasswordMatch(password, userAcc.password, (err, matched) => {
-            if (matched) {
-                //Secret & Expiration
+
+        //Check the password
+        user.isPasswordMatch(password, user.password, (err, matched) => {
+            if (matched) { //Generate JWT
                 const secret = process.env.JWT_SECRET;
                 const expire = process.env.JWT_EXPIRATION;
 
                 const token = jwt.sign({ _id: user._id }, secret, { expiresIn: expire });
-                return res.send({ token});
+                return res.send({ token });
             }
+
             res.status(401).send({
-                error: 'Invalid username/password'
+                error: 'Invalid username/password combination'
             });
         });
-    } catch (e) {
+
+    }catch(e){
         next(e);
     }
+    
 };
 
 module.exports = userController;

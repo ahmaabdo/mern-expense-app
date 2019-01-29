@@ -9,26 +9,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahmaabdo/mern-expense-app.git"
+    "url": "git+https://github.com/abolkog/mern-expense-app.git"
   },
-  "author": "Ahmad",
+  "author": "Khalid Elshafie",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ahmaabdo/mern-expense-app/issues"
+    "url": "https://github.com/abolkog/mern-expense-app/issues"
   },
-  "homepage": "https://github.com/ahmaabdo/mern-expense-app#readme",
+  "homepage": "https://github.com/abolkog/mern-expense-app#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
-    "dotenv": "^6.2.0",
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.4.6",
+    "mongoose": "^5.3.11",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.6"
   }
 }
