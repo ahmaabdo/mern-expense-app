@@ -6,11 +6,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  NavLink
 } from "reactstrap";
 
 class NavBar extends Component {
@@ -38,8 +34,7 @@ class NavBar extends Component {
               <NavItem>
                 <NavLink href="/login">Login</NavLink>
               </NavItem>
-              <NavItem>
-              </NavItem>
+              <NavItem />
             </Nav>
           </Collapse>
         </Navbar>
