@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { Container } from "reactstrap";
 import { Home, Login } from "./pages";
-import { NavBar } from "./components";
+import { NavBar } from "./components/NavBar";
 
 class App extends Component {
   render() {
@@ -17,5 +17,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
