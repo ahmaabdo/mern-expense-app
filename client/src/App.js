@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import { Container } from "reactstrap";
+import { Home, Login } from "./pages";
+import { NavBar } from "./components";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1>Hello React</h1>
-        <Button color="danger">Danger!</Button>
+      <div>
+        <NavBar />
+        <Container>
+          <Route path="/" component={Home} exact />
+          <Route path="/login" component={Login} exact />
+        </Container>
       </div>
     );
   }
