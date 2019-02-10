@@ -10,7 +10,7 @@ class SignUp extends Component {
   render() {
     return (
       <div style={{ padding: 20 }}>
-        <h3>Sign in</h3>
+        <h3>Create new account</h3>
         <hr />
         <Formik
           initialValues={{ name: "", email: "", password: "" }}
@@ -40,7 +40,7 @@ class SignUp extends Component {
                   invalid={errors.name && touched.name}
                   name="name"
                   type="text"
-                  placeholder="Your name"
+                  placeholder="Full name"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -49,12 +49,12 @@ class SignUp extends Component {
                 ) : null}
               </FormGroup>
               <FormGroup>
-                <Label>Email</Label>
+                <Label>Email address</Label>
                 <Input
                   invalid={errors.email && touched.email}
                   name="email"
                   type="email"
-                  placeholder="youremail@example.com"
+                  placeholder="mail@example.com"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -68,7 +68,7 @@ class SignUp extends Component {
                   invalid={errors.password && touched.password}
                   name="password"
                   type="password"
-                  placeholder="Your password"
+                  placeholder="********"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

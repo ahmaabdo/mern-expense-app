@@ -34,12 +34,12 @@ class Login extends Component {
           }) => (
             <div>
               <FormGroup>
-                <Label>Email</Label>
+                <Label>Email address</Label>
                 <Input
                   invalid={errors.email && touched.email}
                   name="email"
                   type="email"
-                  placeholder="youremail@example.com"
+                  placeholder="mail@example.com"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -53,7 +53,7 @@ class Login extends Component {
                   invalid={errors.password && touched.password}
                   name="password"
                   type="password"
-                  placeholder="Your password"
+                  placeholder="Password"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

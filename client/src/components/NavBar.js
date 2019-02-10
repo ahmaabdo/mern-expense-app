@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from "reactstrap";
 import {
   Collapse,
   Navbar,
@@ -35,7 +36,12 @@ class NavBar extends Component {
                 <NavLink href="/login">Login</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/signup">Sign Up</NavLink>
+                <NavLink />
+              </NavItem>
+              <NavItem>
+                <Button color="success" href="/signup">
+                  Sign Up
+                </Button>
               </NavItem>
             </Nav>
           </Collapse>
