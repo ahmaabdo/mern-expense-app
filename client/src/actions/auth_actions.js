@@ -1,5 +1,5 @@
 import { AUTH_ATTEMPTING, AUTH_FAILED, AUTH_SUCCESS } from "./types";
-import axios from "axios";
+import { apiLogin } from "../api/user";
 
 const TOKEN_NAME = "expense_app_token";
 
@@ -9,7 +9,7 @@ export const signIn = request_data => {
     try {
       const {
         data: { token }
-      } = await axios.post("http://localhost:5000/api/v1/auth", request_data);
+      } = await apiLogin(request_data);
       dispatch(success(token));
     } catch (e) {
       const {
