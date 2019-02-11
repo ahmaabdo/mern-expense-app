@@ -1,17 +1,44 @@
 import React, { Component } from "react";
-import { Button, FormGroup, Label, Input, FormFeedback } from "reactstrap";
+import {
+  Button,
+  FormGroup,
+  Label,
+  Input,
+  FormFeedback,
+  Alert
+} from "reactstrap";
+import { Link } from "react-router-dom";
 import { Formik } from "formik";
+import { connect } from "react-redux";
 import * as Yup from "yup";
 
-class Login extends Component {
-  _handleFormSubmit(values) {
-    console.log(values);
+import { signIn } from "../actions";
+
+class LoginPage extends Component {
+  componentDidUpdate() {
+    const { error } = this.props;
+    if (error && this.bag) {
+      this.bag.setSubmitting(false);
+    }
+  }
+  _handleFormSubmit(values, bag) {
+    this.props.signIn(values);
+    this.bag = bag;
+  }
+  _renderErrorIfAny() {
+    const { error } = this.props;
+    if (error) {
+      return <Alert color="danger">{error}</Alert>;
+    }
   }
   render() {
     return (
       <div style={{ padding: 20 }}>
         <h3>Sign in</h3>
         <hr />
+
+        {this._renderErrorIfAny()}
+
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={this._handleFormSubmit.bind(this)}
@@ -20,7 +47,7 @@ class Login extends Component {
               .email()
               .required(),
             password: Yup.string()
-              .min(6)
+              .min(2)
               .required()
           })}
           render={({
@@ -47,13 +74,14 @@ class Login extends Component {
                   <FormFeedback>{errors.email}</FormFeedback>
                 ) : null}
               </FormGroup>
+
               <FormGroup>
                 <Label>Password</Label>
                 <Input
                   invalid={errors.password && touched.password}
                   name="password"
                   type="password"
-                  placeholder="Password"
+                  placeholder="********"
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
@@ -61,6 +89,7 @@ class Login extends Component {
                   <FormFeedback>{errors.password}</FormFeedback>
                 ) : null}
               </FormGroup>
+
               <Button
                 color="primary"
                 block
@@ -72,9 +101,18 @@ class Login extends Component {
             </div>
           )}
         />
+        <Link to="/signup">Do not have an account? Sign up now</Link>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return { attempting: auth.attempting, error: auth.error };
+};
+const Login = connect(
+  mapStateToProps,
+  { signIn }
+)(LoginPage);
 
 export { Login };
