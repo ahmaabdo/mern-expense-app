@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Button } from "reactstrap";
 import {
   Collapse,
@@ -7,48 +8,103 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  Container,
+  UncontrolledDropdown,
+  NavLink,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
+import { logUserOut } from "../actions";
 
-class NavBar extends Component {
+class NavBarComponent extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.toggleButton = this.toggleButton.bind(this);
+
     this.state = {
-      isOpen: false
+      isOpen: false,
+      dropdownOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  toggleButton() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  _renderLoginOrLogout() {
+    const { isAuth, logUserOut } = this.props;
+    if (isAuth) {
+      return (
+        <UncontrolledDropdown
+          nav
+          inNavbar
+          isOpen={this.state.dropdownOpen}
+          toggle={this.toggleButton}
+        >
+          <DropdownToggle caret color="primary">
+            Welcome
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem header>Header</DropdownItem>
+            <DropdownItem>View Profile</DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem onClick={() => logUserOut()}>Logout</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      );
+    }
+    return (
+      <Nav>
+        <NavItem>
+          <NavLink href="/login">Login</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink />
+        </NavItem>
+        <NavItem>
+          <Button color="success" href="/signup">
+            Sign Up
+          </Button>
+        </NavItem>
+      </Nav>
+    );
+  }
   render() {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">Home</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/login">Login</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink />
-              </NavItem>
-              <NavItem>
-                <Button color="success" href="/signup">
-                  Sign Up
-                </Button>
-              </NavItem>
-            </Nav>
-          </Collapse>
+          <Container>
+            <NavbarBrand href="/">Home</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                {this._renderLoginOrLogout()}
+              </Nav>
+            </Collapse>
+          </Container>
         </Navbar>
       </div>
     );
   }
 }
-
+const mapStateToProps = ({ auth }) => {
+  return {
+    isAuth: auth.isAuth
+  };
+};
+const NavBar = connect(
+  mapStateToProps,
+  { logUserOut }
+)(NavBarComponent);
 export { NavBar };

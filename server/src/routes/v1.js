@@ -9,7 +9,7 @@ const expenseController = require('../controllers/expense.controller');
 router.post('/register', userController.regisetr);
 router.post('/auth', userController.login);
 
-// Customize auth message Protect the  routes
+// Customize auth message Protect the routes
 router.all('*', (req, res, next) => {
     passport.authenticate('jwt', { session: false }, (err, user) => {
         if (err || !user) {
