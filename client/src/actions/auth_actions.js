@@ -4,9 +4,9 @@ import {
   AUTH_SUCCESS,
   USER_LOGGED_OUT
 } from "./types";
-import { apiLogin } from "../api/user";
+import { apiLogin, getProfile } from "../api/user";
 
-const TOKEN_NAME = "expense_app_token";
+const TOKEN_NAME = "login_token";
 
 export const signIn = request_data => {
   return async dispatch => {
@@ -15,6 +15,7 @@ export const signIn = request_data => {
       const {
         data: { token }
       } = await apiLogin(request_data);
+      dispatch(featchProfile(token));
       dispatch(success(token));
     } catch (e) {
       const {
@@ -39,6 +40,20 @@ export const onLoadingSignIn = () => {
     }
   };
 };
+
+export const featchProfile = (token) => {
+  return async dispatch => {
+    try {
+      const {
+        data: { user }
+      } = await getProfile(token);
+      console.log(user);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+};
+
 export const logUserOut = () => {
   localStorage.clear();
   return { type: USER_LOGGED_OUT };
