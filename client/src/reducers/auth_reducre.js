@@ -2,7 +2,8 @@ import {
   AUTH_ATTEMPTING,
   AUTH_FAILED,
   AUTH_SUCCESS,
-  USER_LOGGED_OUT
+  USER_LOGGED_OUT,
+  PROFILE_FEATCH
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -27,6 +28,8 @@ export default (state = INITIAL_STATE, action) => {
       };
     case USER_LOGGED_OUT:
       return { ...state, isAuth: false, profile: {} };
+    case PROFILE_FEATCH:
+      return { ...state, profile: action.payload };
     default:
       return state;
   }

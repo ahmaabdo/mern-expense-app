@@ -2,9 +2,11 @@ import {
   AUTH_ATTEMPTING,
   AUTH_FAILED,
   AUTH_SUCCESS,
-  USER_LOGGED_OUT
+  USER_LOGGED_OUT,
+  PROFILE_FEATCH
 } from "./types";
 import { apiLogin, getProfile } from "../api/user";
+import setAuthHeader from "../api/setAuthHeader";
 
 const TOKEN_NAME = "login_token";
 
@@ -15,6 +17,7 @@ export const signIn = request_data => {
       const {
         data: { token }
       } = await apiLogin(request_data);
+      setAuthHeader(token);
       dispatch(featchProfile(token));
       dispatch(success(token));
     } catch (e) {
@@ -34,6 +37,7 @@ export const onLoadingSignIn = () => {
       if (token === null || token === "undefined")
         return dispatch(error("You need to login"));
 
+      setAuthHeader(token);
       dispatch(success(token));
     } catch (err) {
       console.error(err);
@@ -41,13 +45,13 @@ export const onLoadingSignIn = () => {
   };
 };
 
-export const featchProfile = (token) => {
+export const featchProfile = () => {
   return async dispatch => {
     try {
       const {
         data: { user }
-      } = await getProfile(token);
-      console.log(user);
+      } = await getProfile();
+      dispatch({ type: PROFILE_FEATCH, payload: user });
     } catch (e) {
       console.error(e);
     }

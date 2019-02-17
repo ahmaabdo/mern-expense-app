@@ -43,7 +43,7 @@ class NavBarComponent extends Component {
   }
 
   _renderLoginOrLogout() {
-    const { isAuth, logUserOut } = this.props;
+    const { isAuth, logUserOut, profile } = this.props;
     if (isAuth) {
       return (
         <UncontrolledDropdown
@@ -53,7 +53,7 @@ class NavBarComponent extends Component {
           toggle={this.toggleButton}
         >
           <DropdownToggle caret color="primary">
-            Welcome
+            Welcome, {profile.name}
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem header>Header</DropdownItem>
@@ -100,7 +100,8 @@ class NavBarComponent extends Component {
 }
 const mapStateToProps = ({ auth }) => {
   return {
-    isAuth: auth.isAuth
+    isAuth: auth.isAuth,
+    profile: auth.profile
   };
 };
 const NavBar = connect(
