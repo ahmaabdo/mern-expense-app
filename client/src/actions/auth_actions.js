@@ -38,6 +38,7 @@ export const onLoadingSignIn = () => {
         return dispatch(error("You need to login"));
 
       setAuthHeader(token);
+      dispatch(featchProfile(token));
       dispatch(success(token));
     } catch (err) {
       console.error(err);
