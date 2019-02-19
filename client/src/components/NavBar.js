@@ -15,6 +15,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+
 import { logUserOut } from "../actions";
 
 class NavBarComponent extends Component {

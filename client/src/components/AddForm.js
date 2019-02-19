@@ -11,9 +11,11 @@ import {
   FormGroup,
   Label
 } from "reactstrap";
-import { FloatButton } from "./FloatButton";
 import moment from "moment";
 import * as Yup from "yup";
+
+import { FloatButton } from "./FloatButton";
+import { saveExpense } from "../actions";
 
 class AddFormComponent extends Component {
   constructor(props) {
@@ -28,8 +30,19 @@ class AddFormComponent extends Component {
     }));
   }
 
+  componentDidUpdate() {
+    const { saved } = this.props;
+    const { modal } = this.props;
+
+    if (saved && modal) {
+      this.toggle();
+      this.bag.resetForm();
+    }
+  }
+
   _onSubmit(values, bag) {
-    console.log(values);
+    this.props.saveExpense(values);
+    this.bag = bag;
   }
 
   render() {
@@ -56,7 +69,8 @@ class AddFormComponent extends Component {
                 handleChange,
                 values,
                 handleSubmit,
-                isValid, isSubmitting
+                isValid,
+                isSubmitting
               }) => (
                 <div>
                   <FormGroup>
@@ -106,6 +120,15 @@ class AddFormComponent extends Component {
   }
 }
 
-const AddForm = connect(null)(AddFormComponent);
+const mapStateToProps = ({ expense }) => {
+  return {
+    saved: expense.saved
+  };
+};
+
+const AddForm = connect(
+  mapStateToProps,
+  { saveExpense }
+)(AddFormComponent);
 
 export default AddForm;
