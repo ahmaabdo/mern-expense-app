@@ -1,4 +1,4 @@
-const Expense = require('../models/expense.model');
+const Expense = require("../models/expense.model");
 
 const expenseController = {};
 
@@ -37,6 +37,8 @@ expenseController.create = async (req, res, next) => {
   });
 
   try {
+    // const fakeErr = new Error("Failed to save");
+    // return next(fakeErr);
     const saved = await newExpense.save();
     return res.send({
       success: true,
@@ -52,12 +54,11 @@ expenseController.update = async (req, res, next) => {
   const { amount, description, created } = req.body;
 
   try {
-    
     const check = await Expense.findOne({ _id: expense_id });
     if (!check.owner.equals(req.user._id)) {
-      const err = new Error('This exepense object does not belong to you!');
+      const err = new Error("This exepense object does not belong to you!");
       err.status = 401;
-      console.log('error');
+      console.log("error");
       throw err;
     }
 
@@ -76,12 +77,12 @@ expenseController.update = async (req, res, next) => {
 
 expenseController.destroy = async (req, res, next) => {
   const expense_id = req.params.expense_id;
-  
+
   const check = await Expense.findOne({ _id: expense_id });
   if (!check.owner.equals(req.user._id)) {
-    const err = new Error('This exepense object does not belong to you!');
+    const err = new Error("This exepense object does not belong to you!");
     err.status = 401;
-    console.log('error');
+    console.log("error");
     throw err;
   }
 

@@ -14,7 +14,7 @@ import {
 import moment from "moment";
 import * as Yup from "yup";
 
-import { FloatButton } from "./FloatButton";
+import { FloatButton, ErrorMsg } from "../components";
 import { saveExpense } from "../actions";
 
 class AddFormComponent extends Component {
@@ -31,8 +31,12 @@ class AddFormComponent extends Component {
   }
 
   componentDidUpdate() {
-    const { saved } = this.props;
-    const { modal } = this.props;
+    const { saved, errorMsg } = this.props;
+    const { modal } = this.state;
+
+    if (errorMsg) {
+      this.bag.setSubmitting(false);
+    }
 
     if (saved && modal) {
       this.toggle();
@@ -43,6 +47,7 @@ class AddFormComponent extends Component {
   _onSubmit(values, bag) {
     this.props.saveExpense(values);
     this.bag = bag;
+    console.log(values);
   }
 
   render() {
@@ -73,6 +78,7 @@ class AddFormComponent extends Component {
                 isSubmitting
               }) => (
                 <div>
+                  <ErrorMsg />
                   <FormGroup>
                     <Label>Amount</Label>
                     <Input
@@ -120,9 +126,10 @@ class AddFormComponent extends Component {
   }
 }
 
-const mapStateToProps = ({ expense }) => {
+const mapStateToProps = ({ expense, error }) => {
   return {
-    saved: expense.saved
+    saved: expense.saved,
+    errorMsg: error.message
   };
 };
 
