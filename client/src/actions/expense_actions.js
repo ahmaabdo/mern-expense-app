@@ -1,4 +1,4 @@
-import { EXPENSE_SAVED } from "./types";
+import { EXPENSE_SAVED, RESET_SAVED_FLAG } from "./types";
 import { apiSaveExpense } from "../api/expense";
 import { addErrorMsg, clearErrorMsg } from "./error_actions";
 
@@ -13,3 +13,11 @@ export const saveExpense = expense => {
     }
   };
 };
+
+//CAN BE TYPE IN TWO WAYS:
+//1:
+export const resetSaved = () => {
+  return { type: RESET_SAVED_FLAG };
+};
+//2:
+//export const resetSaved = () => ({ type: RESET_SAVED_FLAG });

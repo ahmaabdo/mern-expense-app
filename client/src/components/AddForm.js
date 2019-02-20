@@ -6,7 +6,7 @@ import moment from "moment";
 import * as Yup from "yup";
 
 import { FloatButton, ErrorMsg } from "../components";
-import { saveExpense } from "../actions";
+import { saveExpense, resetSaved } from "../actions";
 
 class AddFormComponent extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class AddFormComponent extends Component {
   }
 
   componentDidUpdate() {
-    const { saved, errorMsg } = this.props;
+    const { saved, errorMsg, resetSaved } = this.props;
     const { modal } = this.state;
 
     if (errorMsg) {
@@ -30,6 +30,7 @@ class AddFormComponent extends Component {
     }
 
     if (saved && modal) {
+      resetSaved();
       this.toggle();
       this.bag.resetForm();
     }
@@ -47,18 +48,36 @@ class AddFormComponent extends Component {
       <div>
         <FloatButton floatBtnClicked={this.toggle} />
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Add New</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Add Expense</ModalHeader>
           <ModalBody>
             <Formik
-              initialValues={{ amount: "", created: now }}
+              initialValues={{ amount: "", created: now, description: '' }}
               onSubmit={this._onSubmit.bind(this)}
               validationSchema={Yup.object().shape({
+                description: Yup.string().min(3),
                 amount: Yup.number().min(1).required(),
-                created: Yup.date().required()
+                created: Yup.date().required(),
               })}
               render={({ errors, touched, handleBlur, handleChange, values, handleSubmit, isValid, isSubmitting }) => (
                 <div>
                   <ErrorMsg />
+
+                  <FormGroup>
+                    <Label>Description</Label>
+                    <Input
+                      invalid={errors.description && touched.description}
+                      name="description"
+                      type="string"
+                      value={values.description}
+                      placeholder="Enter Expense description"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.description && touched.description && (
+                      <FormFeedback>{errors.description}</FormFeedback>
+                    )}
+                  </FormGroup>
+
                   <FormGroup>
                     <Label>Amount</Label>
                     <Input
@@ -112,6 +131,6 @@ const mapStateToProps = ({ expense, error }) => {
   };
 };
 
-const AddForm = connect(mapStateToProps, { saveExpense })(AddFormComponent);
+const AddForm = connect(mapStateToProps, { saveExpense, resetSaved })(AddFormComponent);
 
 export default AddForm;

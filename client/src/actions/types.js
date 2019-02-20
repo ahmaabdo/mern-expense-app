@@ -5,6 +5,7 @@ export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
 export const PROFILE_FEATCH = "PROFILE_FEATCH";
 
 export const EXPENSE_SAVED = "EXPENSE_SAVED";
+export const RESET_SAVED_FLAG = "RESET_SAVED_FLAG";
 
 export const ADD_ERROR = "ADD_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
