@@ -26,6 +26,7 @@ router.all('*', (req, res, next) => {
 
 // -------------- Protected Routes -------------- //
 router.get('/userInfo', userController.userInfo);
+router.get('/expense/:month?', expenseController.get);
 router.get('/expense', expenseController.get);
 router.post('/expense', expenseController.create);
 router.put('/expense/:expense_id', expenseController.update);
