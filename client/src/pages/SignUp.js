@@ -24,15 +24,7 @@ class SignUp extends Component {
               .min(6)
               .required()
           })}
-          render={({
-            handleChange,
-            handleSubmit,
-            isValid,
-            isSubmitting,
-            handleBlur,
-            errors,
-            touched
-          }) => (
+          render={({ handleChange, handleSubmit, isValid, isSubmitting, handleBlur, errors, touched }) => (
             <div>
               <FormGroup>
                 <Label>Name</Label>

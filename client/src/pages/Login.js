@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-  Alert
-} from "reactstrap";
+import { Button, FormGroup, Label, Input, FormFeedback, Alert } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import { connect } from "react-redux";
@@ -53,15 +46,7 @@ class LoginPage extends Component {
               .min(6)
               .required()
           })}
-          render={({
-            handleChange,
-            handleSubmit,
-            isValid,
-            isSubmitting,
-            handleBlur,
-            errors,
-            touched
-          }) => (
+          render={({ handleChange, handleSubmit, isValid, isSubmitting, handleBlur, errors, touched }) => (
             <div>
               <FormGroup>
                 <Label>Email address</Label>
@@ -117,9 +102,6 @@ const mapStateToProps = ({ auth }) => {
     isAuth: auth.isAuth
   };
 };
-const Login = connect(
-  mapStateToProps,
-  { signIn }
-)(LoginPage);
+const Login = connect(mapStateToProps, { signIn })(LoginPage);
 
 export { Login };

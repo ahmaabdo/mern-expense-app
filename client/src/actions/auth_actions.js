@@ -1,10 +1,4 @@
-import {
-  AUTH_ATTEMPTING,
-  AUTH_FAILED,
-  AUTH_SUCCESS,
-  USER_LOGGED_OUT,
-  PROFILE_FEATCH
-} from "./types";
+import { AUTH_ATTEMPTING, AUTH_FAILED, AUTH_SUCCESS, USER_LOGGED_OUT, PROFILE_FEATCH } from "./types";
 import { apiLogin, getProfile } from "../api/user";
 import setAuthHeader from "../api/setAuthHeader";
 

@@ -1,10 +1,4 @@
-import {
-  AUTH_ATTEMPTING,
-  AUTH_FAILED,
-  AUTH_SUCCESS,
-  USER_LOGGED_OUT,
-  PROFILE_FEATCH
-} from "../actions/types";
+import { AUTH_ATTEMPTING, AUTH_FAILED, AUTH_SUCCESS, USER_LOGGED_OUT, PROFILE_FEATCH } from "../actions/types";
 
 const INITIAL_STATE = {
   attempting: false,

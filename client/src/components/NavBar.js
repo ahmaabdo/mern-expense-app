@@ -2,18 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button } from "reactstrap";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Container,
-  UncontrolledDropdown,
-  NavLink,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Container,
+  UncontrolledDropdown, NavLink, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
 
 import { logUserOut } from "../actions";
@@ -105,8 +95,5 @@ const mapStateToProps = ({ auth }) => {
     profile: auth.profile
   };
 };
-const NavBar = connect(
-  mapStateToProps,
-  { logUserOut }
-)(NavBarComponent);
+const NavBar = connect(mapStateToProps, { logUserOut })(NavBarComponent);
 export { NavBar };

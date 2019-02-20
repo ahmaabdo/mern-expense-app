@@ -1,16 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Formik } from "formik";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Input,
-  FormFeedback,
-  FormGroup,
-  Label
-} from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, Input, FormFeedback, FormGroup, Label } from "reactstrap";
 import moment from "moment";
 import * as Yup from "yup";
 
@@ -62,21 +53,10 @@ class AddFormComponent extends Component {
               initialValues={{ amount: "", created: now }}
               onSubmit={this._onSubmit.bind(this)}
               validationSchema={Yup.object().shape({
-                amount: Yup.number()
-                  .min(1)
-                  .required(),
+                amount: Yup.number().min(1).required(),
                 created: Yup.date().required()
               })}
-              render={({
-                errors,
-                touched,
-                handleBlur,
-                handleChange,
-                values,
-                handleSubmit,
-                isValid,
-                isSubmitting
-              }) => (
+              render={({ errors, touched, handleBlur, handleChange, values, handleSubmit, isValid, isSubmitting }) => (
                 <div>
                   <ErrorMsg />
                   <FormGroup>
@@ -94,6 +74,7 @@ class AddFormComponent extends Component {
                       <FormFeedback>{errors.amount}</FormFeedback>
                     )}
                   </FormGroup>
+
                   <FormGroup>
                     <Label>Date</Label>
                     <Input
@@ -109,13 +90,11 @@ class AddFormComponent extends Component {
                       <FormFeedback>{errors.created}</FormFeedback>
                     )}
                   </FormGroup>
+
                   <Button
                     color="primary"
                     onClick={handleSubmit}
-                    disabled={!isValid || isSubmitting}
-                  >
-                    Save
-                  </Button>
+                    disabled={!isValid || isSubmitting}> Save </Button>
                 </div>
               )}
             />
@@ -133,9 +112,6 @@ const mapStateToProps = ({ expense, error }) => {
   };
 };
 
-const AddForm = connect(
-  mapStateToProps,
-  { saveExpense }
-)(AddFormComponent);
+const AddForm = connect(mapStateToProps, { saveExpense })(AddFormComponent);
 
 export default AddForm;
