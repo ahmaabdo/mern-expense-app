@@ -18,7 +18,7 @@ expenseController.get = async (req, res, next) => {
   };
 
   try {
-    const expense = await Expense.find(query);
+    const expense = await Expense.find(query).sort({ created: 'desc' });
     return res.send({
       expense
     });

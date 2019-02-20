@@ -6,7 +6,7 @@ import moment from "moment";
 import * as Yup from "yup";
 
 import { FloatButton, ErrorMsg } from "../components";
-import { saveExpense, resetSaved } from "../actions";
+import { saveExpense, resetSaved, fetchExpense } from "../actions";
 
 class AddFormComponent extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class AddFormComponent extends Component {
   }
 
   componentDidUpdate() {
-    const { saved, errorMsg, resetSaved } = this.props;
+    const { saved, errorMsg, resetSaved, fetchExpense } = this.props;
     const { modal } = this.state;
 
     if (errorMsg) {
@@ -31,6 +31,7 @@ class AddFormComponent extends Component {
 
     if (saved && modal) {
       resetSaved();
+      fetchExpense();
       this.toggle();
       this.bag.resetForm();
     }
@@ -56,7 +57,7 @@ class AddFormComponent extends Component {
               validationSchema={Yup.object().shape({
                 description: Yup.string().min(3),
                 amount: Yup.number().min(1).required(),
-                created: Yup.date().required(),
+                created: Yup.date().required()
               })}
               render={({ errors, touched, handleBlur, handleChange, values, handleSubmit, isValid, isSubmitting }) => (
                 <div>
@@ -101,7 +102,6 @@ class AddFormComponent extends Component {
                       name="created"
                       type="date"
                       value={values.created}
-                      placeholder="Enter Amount"
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -131,6 +131,8 @@ const mapStateToProps = ({ expense, error }) => {
   };
 };
 
-const AddForm = connect(mapStateToProps, { saveExpense, resetSaved })(AddFormComponent);
+const AddForm = connect(
+  mapStateToProps,
+  { saveExpense, resetSaved, fetchExpense })(AddFormComponent);
 
-export default AddForm;
+export { AddForm };

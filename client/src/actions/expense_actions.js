@@ -1,5 +1,5 @@
-import { EXPENSE_SAVED, RESET_SAVED_FLAG } from "./types";
-import { apiSaveExpense } from "../api/expense";
+import { EXPENSE_SAVED, RESET_SAVED_FLAG, FETCHING_EXPENSE, FETCHED_SUCCESS, FETCHED_FAILED } from "./types";
+import { apiSaveExpense, apiFetchExpense } from "../api/expense";
 import { addErrorMsg, clearErrorMsg } from "./error_actions";
 
 export const saveExpense = expense => {
@@ -12,6 +12,19 @@ export const saveExpense = expense => {
       dispatch(addErrorMsg(e));
     }
   };
+};
+
+export const fetchExpense = () => {
+  return async dispatch => {
+    try {
+      dispatch({ type: FETCHING_EXPENSE });
+      const { data } = await apiFetchExpense();
+      dispatch({ type: FETCHED_SUCCESS, payload: data.expense });
+    } catch (e) {
+      dispatch({ type: FETCHED_FAILED });
+      dispatch(addErrorMsg(e));
+    }
+  }
 };
 
 //CAN BE TYPE IN TWO WAYS:
